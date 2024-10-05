@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // JSON and object
+    let obj = {
+      name: "John",
+      age: 30,
+      isAdmin: true,
+      courses: ["html", "css", "js"],
+      wife: null,
+    };
+
+    let json = JSON.stringify(obj);
+
+    console.log(json);
+    console.log(typeof json);
+
+    let clone = JSON.parse(json);
+
+    console.log(clone);
+    console.log(typeof clone);
+
+    // Optional chaining, no need to check if the property exists
+    let users = [
+      {
+        name: "John",
+        age: 30,
+        address: {
+          city: "Hanoi",
+        },
+      },
+      {
+        name: "Jane",
+        age: 25,
+        address: {
+          street: "123 Main St",
+          city: "New York",
+        },
+      },
+    ];
+    for (user of users) {
+      console.log(
+        (user.address?.city ?? "No city") +
+          " " +
+          (user.address?.street ?? "No street")
+      );
+    }
+
+    // error
+    let err = new Error("Something went wrong");
+    try {
+      throw err;
+    } catch (e) {
+      console.log(e.message);
+    }
+  </script>
+</html>
