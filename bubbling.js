@@ -39,11 +39,47 @@ ball.onclick = (e) => {
     }
 }
 
-document.addEventListener("mousemove", (e) => {
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
+document.body.addEventListener("click", (e) => {
+    if (ball.style.backgroundColor === "red") {
+        ball.style.backgroundColor = "blue";
+    } else {
+        ball.style.backgroundColor = "red";
+    }
+})
 
-    // Move the ball to the mouse position
-    ball.style.left = `${mouseX - ball.offsetWidth / 2}px`;
-    ball.style.top = `${mouseY - ball.offsetHeight / 2}px`;
+
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+
+let ballX = mouseX;
+let ballY = mouseY;
+
+const easingFactor = 0.1;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 });
+(function animate() {
+    const dx = mouseX - ballX;
+    const dy = mouseY - ballY;
+
+    ballX += dx * easingFactor;
+    ballY += dy * easingFactor;
+
+    if (
+        ballX >= container.getBoundingClientRect().left &&
+        ballX <= container.getBoundingClientRect().left + container.clientWidth &&
+        ballY >= container.getBoundingClientRect().top &&
+        ballY <= container.getBoundingClientRect().top + container.clientHeight
+    ) {
+        ball.style.backgroundColor = "cyan";
+    } else {
+        if (ball.style.backgroundColor === "cyan")
+            ball.style.backgroundColor = "red";
+        ball.style.left = `${ballX - ball.offsetWidth / 2}px`;
+        ball.style.top = `${ballY - ball.offsetHeight / 2}px`;
+    }
+
+    requestAnimationFrame(animate);
+})()

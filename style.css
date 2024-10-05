@@ -6,10 +6,10 @@
 
 body {
   height: 100vh;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
 }
 
 .ball {
@@ -19,6 +19,7 @@ body {
   height: 50px;
   background-color: red;
   border-radius: 50%;
+  transition: ease-in-out 100ms;
 }
 
 .Container {
