@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .child {
+        background-color: blue;
+        color: white;
+        padding: 10px;
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body onclick="console.log('body')">
+    <div
+      class="parent"
+      style="background-color: red"
+      onclick="console.log('parent')"
+    >
+      <div class="child">1</div>
+      <div class="child">2</div>
+      <div class="child">3</div>
+      <div class="child">4</div>
+      <div class="child">5</div>
+    </div>
+    <!-- <div class="parent-2">
+      <div class="child"></div>
+    </div> -->
+  </body>
+  <script>
+    const parent = document.querySelector(".parent");
+    const child_1 = parent.children;
+    console.log(child_1);
+    child_1[0].onclick = (e) => {
+      e.stopPropagation();
+      e.target.style.backgroundColor = "green";
+    };
+  </script>
+</html>

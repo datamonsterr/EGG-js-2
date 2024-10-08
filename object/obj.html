@@ -7,57 +7,73 @@
   </head>
   <body></body>
   <script>
+    // let obj1 = {
+    //   a: 1,
+    //   b: {
+    //     c: 2,
+    //   },
+    // };
+    // let obj2 = Object.create(obj1);
+    // obj2["a"] = 2;
+    // obj2["b"]["c"] = 3;
+    // console.log(obj1.b.c);
     // JSON and object
-    let obj = {
-      name: "John",
-      age: 30,
-      isAdmin: true,
-      courses: ["html", "css", "js"],
-      wife: null,
-    };
+    // let obj = {
+    //   name: "John",
+    //   age: 30,
+    //   isAdmin: true,
+    //   courses: ["html", "css", "js"],
+    //   wife: null,
+    // };
 
-    let json = JSON.stringify(obj);
+    // let json = JSON.stringify(obj);
 
-    console.log(json);
-    console.log(typeof json);
+    // console.log(json);
+    // console.log(typeof json);
 
-    let clone = JSON.parse(json);
+    // let clone = JSON.parse(`{"a": 1, "b": 2}`);
 
-    console.log(clone);
-    console.log(typeof clone);
+    // console.log(clone);
+    // console.log(typeof clone);
 
-    // Optional chaining, no need to check if the property exists
-    let users = [
-      {
-        name: "John",
-        age: 30,
-        address: {
-          city: "Hanoi",
-        },
-      },
-      {
-        name: "Jane",
-        age: 25,
-        address: {
-          street: "123 Main St",
-          city: "New York",
-        },
-      },
-    ];
-    for (user of users) {
-      console.log(
-        (user.address?.city ?? "No city") +
-          " " +
-          (user.address?.street ?? "No street")
-      );
-    }
+    // // Optional chaining, no need to check if the property exists
+    // let users = [
+    //   {
+    //     name: "John",
+    //     age: 30,
+    //     address: {
+    //       city: "Hanoi",
+    //     },
+    //   },
+    //   {
+    //     name: "Jane",
+    //     age: 25,
+    //     address: {
+    //       street: "123 Main St",
+    //       city: "New York",
+    //     },
+    //   },
+    // ];
+    // for (user of users) {
+    //   console.log(
+    //     (user.address?.city ?? "No city") + " " + user.address?.street
+    //   );
+    // }
 
-    // error
-    let err = new Error("Something went wrong");
-    try {
-      throw err;
-    } catch (e) {
-      console.log(e.message);
-    }
+    // // error
+    // let a = [1, 2, 3, -1];
+    // try {
+    //   for (let i of a) {
+    //     if (i < 0) {
+    //       throw new Error(`${i}`);
+    //     }
+    //     console.log(i);
+    //   }
+    // } catch (a) {
+    //   console.log(`${-parseInt(a.message)}`);
+    // }
+    // let a = [1, 2, 3];
+    // a = a.((x) => "");
+    // console.log(a);
   </script>
 </html>

@@ -1,4 +1,4 @@
-var cnt = 0;
+let cnt = 0;
 const container = document.querySelector(".Container");
 container.querySelectorAll("button").forEach((btn) => {
     let span = btn.querySelector("span");
@@ -11,9 +11,11 @@ container.querySelectorAll("button").forEach((btn) => {
 // Try to click on the span, how to fix it?
 container.addEventListener("click", (e) => {
     e.stopPropagation();
-    if (e.target.tagName !== "BUTTON") return;
-    if (e.target.style.backgroundColor === "red") {
-        e.target.style.backgroundColor = "white";
+    let tar = e.target;
+    if (e.target.tagName === "SPAN") tar = tar.parent;
+    if (tar.tagName !== "BUTTON") return;
+    if (tar.style.backgroundColor === "red") {
+        tar.style.backgroundColor = "white";
         cnt--;
         return;
     }
@@ -23,7 +25,7 @@ container.addEventListener("click", (e) => {
             child.style.backgroundColor = "white";
         });
     }
-    e.target.style.backgroundColor = "red";
+    tar.style.backgroundColor = "red";
     cnt++;
 });
 const ball = document.querySelector(".ball");
