@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="container not-reveal" id="egg-1">
+    <!-- <div class="container not-reveal" id="egg-1">
       <h1 class="egg-name">Name here</h1>
       <button class="egg-btn">Reveal</button>
     </div>
@@ -18,13 +18,14 @@
         <p class="egg-role">Chuc vu: ...</p>
       </div>
       <button class="egg-btn">hide</button>
-    </div>
+    </div> -->
   </body>
+
   <script>
     const data = {
       1: {
         name: "Pham Thanh Dat",
-        birthdate: new Date('2004-17-09'),
+        birthdate: new Date('2004-09-17'),
         ban: "giao duc",
       },
       2: {
@@ -44,17 +45,80 @@
         "chuc vu": "chu nhiem",
       },
     };
-
     // Hàm này lấy input là data như trên và thực hiện thêm một thẻ div có id là egg-{id} và class container vào body của DOM
     // Thể div egg-{1} chỉ chứa name của một thành viên (trong the h1 class egg-name) và một nút reveal (the button class egg-btn)
     // Khi ấn nút reveal thì text của nút reveal chuyển thành hide và hiển thị các thông tin khác của member
     // Khi ấn nút hide thì quay lại trạng thái ban đầu
     // Nếu không có "chuc vu" thì trả ra "thanh vien"
-    // Age tính toán theo bỉthdate
+    // Age tính toán theo birthdate
     // Mở file html này ra nhìn 2 thẻ div bên trên để hiểu nha!!!
 
     // Có thể tách ra nhiều hàm con
     // Submit tất cả code trong 1 file .html
-    function addMemberCard(d) {}
+    
+    function calculateAge(birthDate) {
+        const today = new Date();
+        const birthday = new Date(birthDate);
+
+        let age = today.getFullYear() - birthDate.getFullYear();
+
+        let monthDiff = today.getMonth() - birthday.getMonth();
+        let dateDiff = today.getDate() - birthday.getDate();
+        
+        if((monthDiff < 0) || (monthDiff == 0 && dateDiff < 0)) --age;
+
+        return age;
+    }
+
+    function addMemberCard(key, member) {
+        const newDiv = document.createElement("div");
+        newDiv.classList.add("container");
+        newDiv.id = `egg-${key}`;
+        newDiv.age = calculateAge(member.birthdate);
+        newDiv.name = member.name;
+        newDiv.ban = member.ban;
+        newDiv.role = member["chuc vu"] ?? "nhan vien";
+        document.body.appendChild(newDiv);
+
+        document.getElementById(newDiv.id).innerHTML = `
+        <div class="containerNot-reveal" id="${newDiv.id}">
+          <h1 class="egg-name">${newDiv.name}</h1>
+          <button class="egg-btn">Reveal</button>
+        </div>
+        <div class="containerReveal" id="${newDiv.id}">
+          <h1 class="egg-name">${newDiv.name}</h1>
+          <div class="egg-inf">
+            <p class="egg-age">Age: ${newDiv.age}</p>
+            <p class="egg-ban">Ban: ${newDiv.ban}</p>
+            <p class="egg-role">Chuc vu: ${newDiv.role}</p>  
+          </div>
+          <button class="egg-btn">hide</button>
+        </div>
+        `;
+
+        newDiv.querySelector(".containerReveal").style.display = "none";
+    }   
+
+    Object.entries(data).forEach(([key, member]) => addMemberCard(key, member));    
+
+    document.body.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let tar = e.target;
+        if(tar.tagName !== "BUTTON") return ;
+        if(tar.textContent === "Reveal") {
+            //console.log(tar);
+            tar = tar.parentNode; //console.log(tar);
+            tar = tar.parentNode; //console.log(tar);
+            tar.querySelector(".containerReveal").style.display = "block";
+            tar.querySelector(".containerNot-reveal").style.display = "none";
+            return ;
+        }
+        if(tar.textContent === "hide") {
+            tar = tar.parentNode.parentNode;
+            tar.querySelector(".containerReveal").style.display = "none";
+            tar.querySelector(".containerNot-reveal").style.display = "block";
+            return ;
+        }
+    });
   </script>
 </html>
