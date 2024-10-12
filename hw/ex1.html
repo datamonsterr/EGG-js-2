@@ -23,5 +23,34 @@
     // 3. Chỉ có tối đa 2 nút màu đỏ cùng lúc, nếu đang có 2 nút mà ấn nút thứ 3 -> nút đó chuyển đỏ 2 nút kia màu trắng
     // 4. Chỉ được sử dụng một event listener ở Container (thế mới khó ^^)
     // Khó quá xem trong folder event nhé nhưng vẫn phải làm lại và hiểu code :))
+    const btn = document.querySelector(".Container");
+    // console.log(btn);
+
+    let count = 0;
+
+    btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        let tar = e.target;
+
+        if(tar.tagName === "SPAN") tar = tar.parent;
+        if(tar.tagName !== "BUTTON") return ;
+        if(tar.style.backgroundColor === "red") {
+            tar.style.backgroundColor = "white";
+            --count;
+            return ;
+        }
+        if(count >= 2){
+            btn.querySelectorAll("button").forEach((button) => {
+              if(button.style.backgroundColor === "red") {
+                    button.style.backgroundColor = "white";
+              }
+            });
+            count = 0; 
+        }
+        tar.style.backgroundColor = "red";
+        ++count;
+        
+    })
+
   </script>
 </html>
