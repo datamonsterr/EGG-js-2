@@ -1,60 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="container not-reveal" id="egg-1">
-      <h1 class="egg-name">Name here</h1>
-      <button class="egg-btn">Reveal</button>
-    </div>
-    <div class="container reveal" id="egg-1">
-      <h1 class="egg-name">Name here</h1>
-      <div class="egg-inf">
-        <p class="egg-age">Age: ...</p>
-        <p class="egg-ban">Ban: ...</p>
-        <p class="egg-role">Chuc vu: ...</p>
-      </div>
-      <button class="egg-btn">hide</button>
-    </div>
-  </body>
-  <script>
-    const data = {
-      1: {
-        name: "Pham Thanh Dat",
-        birthdate: new Date('2004-17-09'),
-        ban: "giao duc",
-      },
-      2: {
-        name: "Hoang Thi Hanh",
-        birthdate: new Date('2005-01-01'),
-        ban: "truyen thong",
-      },
-      3: {
-        name: "Trinh Phu Thai",
-        birthdate: new Date('2005-01-01'),
-        ban: "truyen thong + giao duc",
-      },
-      4: {
-        name: "Nguyen Tuan Dat",
-        birthdate: new Date('2004-01-01'),
-        ban: "giao duc",
-        "chuc vu": "chu nhiem",
-      },
-    };
 
-    // Hàm này lấy input là data như trên và thực hiện thêm một thẻ div có id là egg-{id} và class container vào body của DOM
-    // Thể div egg-{1} chỉ chứa name của một thành viên (trong the h1 class egg-name) và một nút reveal (the button class egg-btn)
-    // Khi ấn nút reveal thì text của nút reveal chuyển thành hide và hiển thị các thông tin khác của member
-    // Khi ấn nút hide thì quay lại trạng thái ban đầu
-    // Nếu không có "chuc vu" thì trả ra "thanh vien"
-    // Age tính toán theo bỉthdate
-    // Mở file html này ra nhìn 2 thẻ div bên trên để hiểu nha!!!
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EX2</title>
+  <style>
+    body {
+      margin-top: 200px;
+      background-color: rgba(211, 233, 238, 0.4);
+    }
 
-    // Có thể tách ra nhiều hàm con
-    // Submit tất cả code trong 1 file .html
-    function addMemberCard(d) {}
-  </script>
+    .container-not-reveal {
+      display: flex;
+      justify-content: space-evenly;
+      margin-left: 50px;
+      margin-right: 50px;
+    }
+
+    .container-not-reveal>.person {
+      border: 2px solid burlywood;
+      width: 25%;
+      height: 200px;
+      text-align: center;
+    }
+
+    .container-reveal {
+      margin-left: 40%;
+      font-size: large;
+      text-shadow: 2px 2px 5px rgba(236, 48, 23, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-not-reveal">
+    <div class="person">
+      <h1 class="egg-name">Pham Thanh Dat</h1>
+      <button class="egg-btn" data-id="1">Reveal</button>
+    </div>
+    <div class="person">
+      <h1 class="egg-name">Hoang Thi Hanh</h1>
+      <button class="egg-btn" data-id="2">Reveal</button>
+    </div>
+
+    <div class="person">
+      <h1 class="egg-name">Trinh Phu Thai</h1>
+      <button class="egg-btn" data-id="3">Reveal</button>
+    </div>
+    <div class="person">
+      <h1 class="egg-name">Nguyen Tuan Dat</h1>
+      <button class="egg-btn" data-id="4">Reveal</button>
+    </div>
+  </div>
+
+  <div class="container-reveal"></div>
+
+</body>
+
+
+<script>
+  const data = {
+    1: {
+      name: "Pham Thanh Dat",
+      birthdate: new Date('2004-09-17'),
+      Department: "giao duc",
+    },
+    2: {
+      name: "Hoang Thi Hanh",
+      birthdate: new Date('2005-10-24'),
+      Department: "truyen thong",
+    },
+    3: {
+      name: "Trinh Phu Thai",
+      birthdate: new Date('2005-01-01'),
+      Department: "truyen thong + giao duc",
+    },
+    4: {
+      name: "Nguyen Tuan Dat",
+      birthdate: new Date('2004-01-01'),
+      Department: "giao duc",
+      "Role": "Chu nhiem",
+    },
+  };
+
+  // Hàm này lấy input là data như trên và thực hiện thêm một thẻ div có id là egg-{id} và class container vào body của DOM
+  // Thể div egg-{1} chỉ chứa name của một thành viên (trong the h1 class egg-name) và một nút reveal (the button class egg-btn)
+  // Khi ấn nút reveal thì text của nút reveal chuyển thành hide và hiển thị các thông tin khác của member
+  // Khi ấn nút hide thì quay lại trạng thái ban đầu
+  // Nếu không có "chuc vu" thì trả ra "thanh vien"
+  // Age tính toán theo bỉthdate
+  // Mở file html này ra nhìn 2 thẻ div bên trên để hiểu nha!!!
+
+  // Có thể tách ra nhiều hàm con
+  // Submit tất cả code trong 1 file .html
+  
+  var calAge = (birthdate) => {
+    var now = new Date()
+    return now.getFullYear() - birthdate.getFullYear()
+  }
+
+  function addMemberCard(member) {
+
+    let myHTML = {
+      tag: "div",
+      children: [
+        {
+          tag: "h1",
+          text: member.name
+        },
+        {
+          tag: "div",
+          children: [
+            {
+              tag: "p",
+              text: "Age: " + calAge(member.birthdate)
+            },
+            {
+              tag: "p",
+              text: "Department: " + member.Department
+            },
+            {
+              tag: "p",
+              text: "Role: " + (member.Role ? member.Role : "Thanh vien")
+            }
+          ]
+        },
+        {
+          tag: "button",
+          text: "Hide"
+        }
+      ]
+    }
+
+
+    let htmlString = "";
+    htmlString += `<${myHTML.tag}>`;
+    myHTML.children.forEach((child) => {
+      htmlString += `<${child.tag}>`;
+      if (child.text) {
+        htmlString += child.text;
+      }
+      if (child.children) {
+        child.children.forEach((child) => {
+          htmlString += `<${child.tag}>`;
+          if (child.text) {
+            htmlString += child.text;
+          }
+          htmlString += `</${child.tag}>`;
+        })
+      }
+      htmlString += `</${child.tag}>`;
+    })
+    htmlString += `</${myHTML.tag}>`;
+
+
+    const revealContainer = document.querySelector(".container-reveal");
+    const notRevealContainer = document.querySelector(".container-not-reveal ");
+
+    revealContainer.innerHTML = htmlString;
+
+    notRevealContainer.style.display = "none";
+    revealContainer.style.display = "block";
+
+    revealContainer.querySelector("button").addEventListener("click", function () {
+      revealContainer.style.display = "none";
+      notRevealContainer.style.display = "flex";
+    });
+  }
+
+
+  document.querySelectorAll(".egg-btn").forEach(x => {
+    x.addEventListener("click", () => {
+      const mem = data[x.getAttribute("data-id")];
+      addMemberCard(mem);
+    });
+  });
+</script>
+
 </html>

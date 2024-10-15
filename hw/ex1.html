@@ -1,27 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="ball"></div>
-    <div class="Container">
-      <button>Count <span>0</span></button>
-      <button>Count <span>0</span></button>
-      <button>Count <span>0</span></button>
-      <button>Count <span>0</span></button>
-      <button>Count <span>0</span></button>
-      <button>Count <span>0</span></button>
-    </div>
-  </body>
-  <script>
-    // Các em thực hành lại bài bấm 5 cái nút vô đây
-    // 1. Ấn vào nút màu trắng -> chuyển thành màu đỏ
-    // 2. Ấn vào nút màu đỏ -> Chuyển thành màu trắng
-    // 3. Chỉ có tối đa 2 nút màu đỏ cùng lúc, nếu đang có 2 nút mà ấn nút thứ 3 -> nút đó chuyển đỏ 2 nút kia màu trắng
-    // 4. Chỉ được sử dụng một event listener ở Container (thế mới khó ^^)
-    // Khó quá xem trong folder event nhé nhưng vẫn phải làm lại và hiểu code :))
-  </script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>EX1</title>
+</head>
+
+<body>
+  <div class="ball"></div>
+  <div class="Container">
+    <button>Count <span>0</span></button>
+    <button>Count <span>0</span></button>
+    <button>Count <span>0</span></button>
+    <button>Count <span>0</span></button>
+    <button>Count <span>0</span></button>
+    <button>Count <span>0</span></button>
+  </div>
+</body>
+<script>
+
+
+var container = document.querySelector(".Container")
+  var cntRed = 0;
+  container.addEventListener("click", function (e) {
+    e.stopPropagation()
+  // ----------------------Doi mau--------------------------
+    var currentColor = getComputedStyle(e.target).backgroundColor;
+    if (currentColor === "rgba(233, 112, 152, 0.3)" && cntRed < 2) {
+      e.target.style.backgroundColor = "rgb(241, 15, 15)"
+      cntRed++
+    }
+    else if (currentColor === "rgb(241, 15, 15)") {
+      e.target.style.backgroundColor = "rgba(233, 112, 152, 0.3)"
+      cntRed--
+    }
+    else if (cntRed === 2 && currentColor === "rgba(233, 112, 152, 0.3)") {
+      document.querySelectorAll("button").forEach(function (x) {
+        if (getComputedStyle(x).backgroundColor === "rgb(241, 15, 15)") {
+          x.style.backgroundColor = "rgba(233, 112, 152, 0.3)"
+        }
+      })
+      e.target.style.backgroundColor = "rgb(241, 15, 15)"
+      cntRed = 1;
+    }
+    
+
+  //-------------------------------Dem so------------------------------
+   if(e.target.tagName === "SPAN") {
+    var curValue = parseInt(e.target.innerText)
+    e.target.innerText = `${curValue + 1}`
+   }
+
+
+   //-----------------------------ball---------------------------------
+   // em chua hieu cai ball, lam sau nhe a :<
+});
+
+  // Các em thực hành lại bài bấm 5 cái nút vô đây
+  // 1. Ấn vào nút màu trắng -> chuyển thành màu đỏ
+  // 2. Ấn vào nút màu đỏ -> Chuyển thành màu trắng
+  // 3. Chỉ có tối đa 2 nút màu đỏ cùng lúc, nếu đang có 2 nút mà ấn nút thứ 3 -> nút đó chuyển đỏ 2 nút kia màu trắng
+  // 4. Chỉ được sử dụng một event listener ở Container (thế mới khó ^^)
+  // Khó quá xem trong folder event nhé nhưng vẫn phải làm lại và hiểu code :))
+</script>
+
 </html>
